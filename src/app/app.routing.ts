@@ -1,30 +1,27 @@
-﻿import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
-import { HomeComponent } from './home';
-import { AdminComponent } from './admin';
 import { LoginComponent } from './login';
 import { AuthGuard } from './_helpers';
-import { Role } from './_models';
+import { QuanTriComponent } from './quan-tri/quan-tri.component';
+import { QuanTriRoutingModule } from './quan-tri/quan-tri-routing';
 
 const routes: Routes = [
-    {
-        path: '',
-        component: HomeComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'admin',
-        component: AdminComponent,
-        canActivate: [AuthGuard],
-        data: { roles: [Role.Admin] }
-    },
-    {
-        path: 'login',
-        component: LoginComponent
-    },
+  {
+    path: 'quan-tri',
+    component: QuanTriComponent,
+    canActivate: [AuthGuard],
+    children: [{
+      path: '',
+      loadChildren: () => QuanTriRoutingModule
+    }]
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
 
-    // otherwise redirect to home
-    { path: '**', redirectTo: '' }
+  // otherwise redirect to home
+  { path: '**', redirectTo: 'quan-tri' }
 ];
 
 export const appRoutingModule = RouterModule.forRoot(routes);
