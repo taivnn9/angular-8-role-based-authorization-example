@@ -17,15 +17,15 @@ export class QuanTriComponent{
     private router: Router,
     private authenticationService: AuthenticationService
   ) {
-    //this.authenticationService.currentUser.subscribe(x => {
-    //  console.log(this.currentUser)
-    //  this.currentUser = x
-    //});
-  }
-  ngOnInit(): void {
     this.authenticationService.currentUser.subscribe(x => {
+      console.log(this.currentUser)
       this.currentUser = x
     });
+  }
+  ngOnInit(): void {
+    //this.authenticationService.currentUser.subscribe(x => {
+    //  this.currentUser = x
+    //});
   }
 
   get isAdmin() {

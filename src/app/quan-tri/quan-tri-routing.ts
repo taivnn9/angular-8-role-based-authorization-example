@@ -7,7 +7,7 @@ import { Role } from '../_models';
 
 
 
-const routes: Routes = [
+const QuanTriRoutes: Routes = [
   {
     path: '',
     component: HomeComponent,
@@ -21,10 +21,15 @@ const routes: Routes = [
       roles: [Role.Admin]
     }
   },
+  {
+    path: '**',
+    component: HomeComponent,
+    //canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(QuanTriRoutes)],
   exports: [RouterModule],
   declarations: [],
   entryComponents: [],

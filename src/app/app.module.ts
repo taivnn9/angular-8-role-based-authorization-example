@@ -7,7 +7,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { fakeBackendProvider } from './_helpers';
 
 import { AppComponent } from './app.component';
-import { appRoutingModule } from './app.routing';
+//import { appRoutingModule } from './app.routing';
 
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { HomeComponent } from './home';
@@ -15,14 +15,15 @@ import { AdminComponent } from './admin';
 import { LoginComponent } from './login';;
 import { QuanTriComponent } from './quan-tri/quan-tri.component'
 import { QuanTriRoutingModule } from './quan-tri/quan-tri-routing';
+import { AppRoutingModule } from './app.routing';
 
 @NgModule({
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    appRoutingModule,
-    QuanTriRoutingModule
+    AppRoutingModule,
+    //QuanTriRoutingModule
   ],
   declarations: [
     AppComponent,
