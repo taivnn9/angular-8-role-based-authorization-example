@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '@environments/environment';
@@ -14,5 +14,6 @@ export class UserService {
 
     getById(id: number) {
         return this.http.get<User>(`${environment.apiUrl}/users/${id}`);
-    }
+  }
+
 }

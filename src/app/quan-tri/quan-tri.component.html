@@ -1,9 +1,9 @@
 
 <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
   <div class="navbar-nav">
-    <a class="nav-item nav-link" routerLink="/home" routerLinkActive="active">Home</a>
+    <a class="nav-item nav-link" routerLink="/home" routerLinkActive="active">Quản lý Môn thể thao</a>
     <a class="nav-item nav-link" routerLink="/admin" *ngIf="isAdmin">Admin</a>
-    <a class="nav-item nav-link" (click)="logout()">Logout</a>
+    <a class="nav-item nav-link" (click)="logout()">Đăng xuất</a>
   </div>
 </nav>
 
@@ -15,9 +15,9 @@
 <!-- credits -->
 <div class="text-center mt-4">
   <p>
-    <a href="https://jasonwatmore.com/post/2019/08/06/angular-8-role-based-authorization-tutorial-with-example" target="_top">Angular 8 - Role Based Authorization Tutorial with Example</a>
+    <a href="{{swaggerUI}}" target="_top">Thể thao Việt Nam - Danh sách API</a>
   </p>
-  <p>
+  <!--<p>
     <a href="https://jasonwatmore.com" target="_top">JasonWatmore.com</a>
-  </p>
+  </p>-->
 </div>

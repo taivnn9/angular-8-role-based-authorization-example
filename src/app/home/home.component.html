@@ -1,13 +1,167 @@
-﻿<div class="card mt-4">
-    <h4 class="card-header">Home</h4>
-    <div class="card-body">
-        <p>You're logged in with Angular 8 & JWT!!</p>
-        <p>Your role is: <strong>{{currentUser.role}}</strong>.</p>
-        <p>This page can be accessed by <u>all authenticated users</u>.</p>
-        <p class="mb-1">Current user from secure api end point:</p>
-        <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
-        <ul *ngIf="userFromApi">
-            <li>{{userFromApi.firstName}} {{userFromApi.lastName}}</li>
-        </ul>
+
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Quản lý môn thể thao</h3>
+
+        <div class="card-tools">
+          <div class="input-group input-group-sm" style="width: 150px;">
+            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+            
+            <div class="input-group-append">
+              <button type="submit" class="btn btn-default">
+                <i class="fas fa-search"></i>
+              </button>
+
+              <button type="button" class="btn btn-block btn-outline-info" data-toggle="modal" data-target="#modal-xl" (click)="openModal(null)">
+                <i class="fas fa-plus-circle"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body table-responsive p-0" style="min-height:400px; max-height: 800px;">
+        <table class="table table-head-fixed text-nowrap">
+          <thead>
+            <tr>
+              <th>Mã khóa</th>
+              <th>Tên môn thể thao</th>
+              <!--<th>Luật thi đấu</th>
+              <th>Giói thiệu</th>-->
+              <th>Ảnh logo</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let sport of sports">
+              <td><span class="tag tag-success">{{sport.sportId}}</span></td>
+              <td title="{{sport.name}}">{{sport.name | truncate:[20, '...']}}</td>
+              <!--<td title="{{sport.rules}}">{{sport.rules | truncate:[20, '...']}}</td>
+              <td title="{{sport.introduce}}">{{sport.introduce | truncate:[20, '...']}}</td>-->
+              <td title="{{sport.iconPath}}">
+                <div class="position-relative">
+                  <img style="max-height:100px;" [src]="sport.iconPath" alt="Photo 1" class="img-fluid">
+                </div>
+              </td>
+              <td>
+                <button type="button" class="btn btn-block btn-outline-info" data-toggle="modal" data-target="#modal-xl" (click)="openModal(sport)">
+                  <i class="fas fa-edit"></i> Chi tiết
+                </button>
+                <button type="button" class="btn btn-block btn-outline-danger" (click)="remove(sport)">
+                  <i class="far fa-trash-alt"></i> Xóa
+                </button>
+              </td>
+              <!--<td>John Doe</td>-->
+              <!--<td>11-7-2014</td>
+              <td><span class="tag tag-success">Approved</span></td>
+              <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>-->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- /.card-body -->
     </div>
+    <!-- /.card -->
+  </div>
 </div>
+
+<div class="modal fade" id="modal-xl">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+      <div class="col-md-12">
+
+
+        <form>
+          <div class="card-body">
+
+            <div class="form-group">
+              <label for="inputSportName">Tên môn thể thao</label>
+              <input type="text" class="form-control"
+                     [(ngModel)]="currentSport.name"
+                     id="inputSportName"
+                     name="inputSportName"
+                     placeholder="Tên môn thể thao">
+            </div>
+
+            <div class="form-group">
+              <label for="inputSportRules">Luật thi đấu</label>
+              <!--<input type="email" class="form-control" id="inputSportRules" placeholder="Enter email">-->
+              <editor id="inputSportRules"
+                      name="inputSportRules"
+                      apiKey="uoj7xm37gammhdybi25ffzlpufyz1gsfth0yf0fm21kvhb69"
+                      [init]="{
+                      plugins: 'lists link image table code help wordcount' ,
+                      height: 300
+                      }"
+                      [(ngModel)]="currentSport.rules"></editor>
+            </div>
+
+            <div class="form-group">
+              <label for="inputSportIntroduce">Giới thiệu</label>
+              <!--<input type="email" class="form-control" id="inputSportIntroduce" placeholder="Enter email">-->
+              <editor id="inputSportIntroduce"
+                      name="inputSportIntroduce"
+                      apiKey="uoj7xm37gammhdybi25ffzlpufyz1gsfth0yf0fm21kvhb69"
+                      [init]="{
+                      plugins: 'lists link image table code help wordcount',
+                      toolbar: 'undo redo | blocks styles | bold underline italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | help',
+                      height: 300}"
+                      [(ngModel)]="currentSport.introduce"></editor>
+            </div>
+
+
+            <div class="form-group">
+              <label for="exampleInputFile">Ảnh logo</label>
+
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="position-relative">
+                    <img style="max-height:100px;" [src]="currentSport.iconPath" alt="Photo 1" class="img-fluid">
+                  </div>
+                </div>
+                <input type="text"
+                       id="inputSportIconPath"
+                       name="inputSportIconPath"
+                       class="form-control"
+                       [(ngModel)]="currentSport.iconPath">
+              </div>
+
+              <!--<div class="input-group">
+                <div class="custom-file">
+                  <input type="file"
+                         class="custom-file-input"
+                         id="inputSportIconPath"
+                         name="inputSportIconPath"
+                         [(ngModel)]="currentSport.iconPath">
+                  <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                </div>
+                <div class="input-group-append">
+                  <span class="input-group-text">Tải lên</span>
+                </div>
+              </div>-->
+            </div>
+            <!--
+
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div>-->
+
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-primary" (click)="closeMoal()">Lưu thay đổi</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
